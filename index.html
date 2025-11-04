@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Kelly Daniel" />
+    <title>Commission - Prototype</title>
+
+    <style>
+      body {
+        background-color: #f4f6f8;
+        font-family: "Segoe UI", Arial, sans-serif;
+        color: #222;
+        text-align: center;
+        padding: 60px;
+        line-height: 1.6;
+      }
+
+      h1 {
+        font-weight: 500;
+        margin-bottom: 20px;
+      }
+
+      p {
+        background-color: white;
+        display: inline-block;
+        padding: 20px 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+      // -----------------------------------------------
+      // Commission - Prototype
+      // Author: Kelly Daniel
+      // Description: Collects Sales, Calc Comm,
+      // Displays Earnings
+      // -----------------------------------------------
+
+      //Get Sales Person's Name //
+      let salesPersonName = prompt(
+        "Please enter your name to begin calculating your Weekly Commission Report."
+      );
+
+      //Define Constants//
+
+      const Tier1 = {
+        start: 0,
+        end: 0,
+      };
+      const Tier2 = {
+        start: 0.01,
+        end: 499.99,
+      };
+      const Tier3 = {
+        start: 500.0,
+        end: 999.99,
+      };
+      const Tier4 = {
+        start: 1000,
+        end: Infinity,
+      };
+      const Rate1 = 0.0;
+      const Rate2 = 0.05;
+      const Rate3 = 0.1;
+      const Rate4 = 0.15;
+
+      //define calculations: define subTotal (sum of all the entries) define commRate (based on sum of subTotal), totalComm (subTotal * commRate), totalWeeklyEarn (subTotal + totalComm).//
+
+      //Begin loop, posttest loop best, checking for input and Done//
+
+      let subTotal = 0;
+      let salesEntry;
+
+      do {
+        salesEntry = prompt(
+          "Enter the dollar amount for your sales a single sale at a time. Enter Done when you are finished."
+        );
+
+        if (salesEntry !== null && salesEntry.toLowerCase() !== "done") {
+          subTotal += parseFloat(salesEntry);
+        }
+      } while (salesEntry !== null && salesEntry.toLowerCase() !== "done");
+      // Determine commission rate based on subtotal //
+      let commRate;
+      if (subTotal <= Tier1.end) {
+        commRate = Rate1;
+      } else if (subTotal <= Tier2.end) {
+        commRate = Rate2;
+      } else if (subTotal <= Tier3.end) {
+        commRate = Rate3;
+      } else {
+        commRate = Rate4;
+      }
+      // Calculate totals - see notes above for ref //
+      let totalComm = subTotal * commRate;
+      let totalWeeklyEarn = subTotal + totalComm;
+
+      // Display Report //
+      document.write(`
+  <h1>Hello ${salesPersonName},</h1>
+  <p>
+    Here is your Weekly Commission Report.<br><br>
+    Your sales total is $${subTotal.toFixed(2)}, so your commission rate is ${(
+        commRate * 100
+      ).toFixed(2)}%.<br>
+    Your total commission is $${totalComm.toFixed(2)}.<br>
+    Your total earnings are $${totalWeeklyEarn.toFixed(2)}.
+  </p>
+`);
+    </script>
+  </body>
+</html>
